@@ -102,7 +102,7 @@ class Event < ActiveRecord::Base
   end
 
   def update_investments
-    if agent.name[0..3] = 'MF: '
+    if agent.name[0..3] == 'MF: '
       Investment.where(
         account: agent.name.split(': ').last
       ).update_all(
