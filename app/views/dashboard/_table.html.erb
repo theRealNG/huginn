@@ -1,0 +1,24 @@
+<div class='table-responsive'>
+  <table class='table table-striped'>
+    <tr>
+      <th></th>
+      <% cols = @summary.first.second.keys %>
+      <% cols.each do |col| %>
+        <th><%= col.to_s.titleize %></th>
+      <% end %>
+    </tr>
+    <% @summary.each do |year, data| %>
+      <tr>
+        <th><%= year %></th>
+        <% data.values.each do |value| %>
+          <td>
+            <% value.each do |type, amount| %>
+              <%= "#{type.to_s.titleize} : #{amount.round(2)}" %>
+              </br>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+</div>

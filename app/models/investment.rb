@@ -1,7 +1,12 @@
 class Investment < ActiveRecord::Base
   include LiquidDroppable
   acts_as_mappable
+
   default_scope { order(purchased_on: :desc) }
+  scope :tax_saving_mutual_funds, -> { where(tax_saving: true, investment_type: 'Mutual Funds') }
+  scope :non_tax_saving_mutual_funds, -> { where(tax_saving: false, investment_type: 'Mutual Funds') }
+  scope :gold_investments, -> { where(investment_type: 'Gold') }
+  scope :ppf_investments, -> { where(investment_type: 'PPF') }
 
   INVESTMENT_TYPES = ['Mutual Funds', 'PPF', 'Gold']
   APPS = ['FundsIndia', 'ICICI', 'GooglePay', 'PayTM', 'PayTM Money']
@@ -11,21 +16,42 @@ class Investment < ActiveRecord::Base
   validates :app, inclusion: { in: APPS }
   validates :financial_year, presence: true
 
-  case ActiveRecord::Base.connection.adapter_name
-  when /\Amysql/i
-    # Protect the Event table from InnoDB's AUTO_INCREMENT Counter
-    # Initialization by always keeping the latest event.
-    scope :to_expire, -> { expired.where.not(id: maximum(:id)) }
-  else
-    scope :to_expire, -> { expired }
-  end
-
   def current_value
-    units * current_nav
+    case investment_type
+    when 'Mutual Funds'
+      units * current_nav
+    when 'Gold'
+      amount
+    when 'PPF'
+      amount
+    end
   end
 
   def percentage_change
     ((current_value - amount)/amount * 100)
+  end
+
+  def self.summary
+    results = {}
+    financial_years = Investment.select(:financial_year).pluck(:financial_year)
+    keys = [:tax_saving_mutual_funds, :non_tax_saving_mutual_funds, :gold_investments, :ppf_investments]
+    financial_years.each do |year|
+
+      results[year] = {}
+
+      keys.each do |key|
+        invested_amount = Investment.send(key).sum(:amount).to_f
+        current_value = Investment.send(key).map(&:current_value).sum.to_f
+        percentage_change = ((current_value - invested_amount)/invested_amount) * 100
+
+        results[year][key] = {
+          invested_amount: invested_amount,
+          current_value: current_value,
+          percentage_change: percentage_change
+        }
+      end
+    end
+    results
   end
 
   private

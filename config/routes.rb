@@ -32,6 +32,8 @@ Huginn::Application.routes.draw do
   end
 
   resources :investments, :only => [:index, :new]
+  get "/dashboard" => "dashboard#index"
+
 
   scope module: :agents do
     resources :dry_runs, only: [:index, :create]
