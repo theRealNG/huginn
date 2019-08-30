@@ -4,6 +4,12 @@ class Investment < ActiveRecord::Base
   default_scope { order(purchased_on: :desc) }
 
   INVESTMENT_TYPES = ['Mutual Funds', 'PPF', 'Gold']
+  APPS = ['FundsIndia', 'ICICI', 'GooglePay', 'PayTM', 'PayTM Money']
+
+  before_validation :set_financial_year
+
+  validates :app, inclusion: { in: APPS }
+  validates :financial_year, presence: true
 
   case ActiveRecord::Base.connection.adapter_name
   when /\Amysql/i
@@ -20,5 +26,17 @@ class Investment < ActiveRecord::Base
 
   def percentage_change
     ((current_value - amount)/amount * 100)
+  end
+
+  private
+  def set_financial_year
+    year = purchased_on.year
+    month = purchased_on.month
+
+    financial_year= if month > 3
+      "#{year}-#{year+1}"
+    else
+      "#{year-1}-#{year}"
+    end
   end
 end
