@@ -40,8 +40,8 @@ class Investment < ActiveRecord::Base
       results[year] = {}
 
       keys.each do |key|
-        invested_amount = Investment.send(key).sum(:amount).to_f
-        current_value = Investment.send(key).map(&:current_value).sum.to_f
+        invested_amount = Investment.where(financial_year: year).send(key).sum(:amount).to_f
+        current_value = Investment.where(financial_year: year).send(key).map(&:current_value).sum.to_f
         percentage_change = ((current_value - invested_amount)/invested_amount) * 100
 
         results[year][key] = {
