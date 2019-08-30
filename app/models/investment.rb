@@ -33,7 +33,7 @@ class Investment < ActiveRecord::Base
     year = purchased_on.year
     month = purchased_on.month
 
-    financial_year= if month > 3
+    self.financial_year = if month > 3
       "#{year}-#{year+1}"
     else
       "#{year-1}-#{year}"
