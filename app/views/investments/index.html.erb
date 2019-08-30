@@ -1,0 +1,48 @@
+<% content_for :title, 'Investments' %>
+
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-12'>
+      <div class="page-header">
+        <h2>
+          Your Investments
+        </h2>
+      </div>
+
+      <div class='table-responsive'>
+        <table class='table table-striped events'>
+          <tr>
+            <th>Amount</th>
+            <th>Current Value</th>
+            <th>Percentage Change</th>
+            <th>Account</th>
+            <th>Financial Year</th>
+            <th>Type</th>
+            <th>Tax Saving</th>
+            <th>Date</th>
+            <th>Units</th>
+            <th>Current NAV</th>
+            <th>App</th>
+          </tr>
+        <% @investments.each do |investment| %>
+          <tr>
+            <td><%= investment.amount %></td>
+            <td><%= investment.current_value.round(2) %></td>
+            <td><%= investment.percentage_change.round(2) %></td>
+            <td><%= investment.account %></td>
+            <td><%= investment.financial_year %></td>
+            <td><%= investment.investment_type %></td>
+            <td><%= investment.tax_saving %></td>
+            <td><%= investment.purchased_on %></td>
+            <td><%= investment.units %></td>
+            <td><%= investment.current_nav %></td>
+            <td><%= investment.app %></td>
+        <% end %>
+        </table>
+      </div>
+
+      <br />
+    </div>
+  </div>
+</div>
+

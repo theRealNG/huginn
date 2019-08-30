@@ -31,6 +31,8 @@ Huginn::Application.routes.draw do
     end
   end
 
+  resources :investments, :only => [:index, :new]
+
   scope module: :agents do
     resources :dry_runs, only: [:index, :create]
   end

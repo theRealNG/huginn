@@ -1,0 +1,26 @@
+<% content_for :title, "Add Investment" -%>
+
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-12'>
+      <div class="page-header">
+        <h2>
+          Add a new Investment
+          <%= image_tag "spinner-arrows.gif", :class => "spinner", :id => 'agent-spinner' %>
+        </h2>
+      </div>
+
+      <div id="investment-form">
+        <%= render 'form' %>
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-md-12">
+          <%= link_to icon_tag('glyphicon-chevron-left') + ' Back'.html_safe, investments_path, class: "btn btn-default" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

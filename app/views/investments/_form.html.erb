@@ -1,0 +1,35 @@
+<% load_ace_editor! %>
+
+<% if @investment.errors.any? %>
+  <div class="row well model-errors">
+    <h2><%= pluralize(@investment.errors.count, "error") %> prohibited this Investment from being saved:</h2>
+    <% @investment.errors.full_messages.each do |msg| %>
+      <p class='text-warning'><%= msg %></p>
+    <% end %>
+  </div>
+<% end %>
+
+<%= form_for(@investment,
+             as: :investment,
+             url: @investment.new_record? ? investments_path : investment_path(@investment),
+             method: @investment.new_record? ? "POST" : "PUT",
+             html: { class: 'investment-form' }) do |f| %>
+
+  <%= hidden_field_tag :return, params[:return] %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+
+        <div class="col-md-12">
+          <% if @investment.new_record? %>
+            <div class="form-group type-select">
+              <%= f.label :investment_type %>
+              <%= f.select :investment_type, options_for_select(Investment::INVESTMENT_TYPES, @investment.investment_type), {}, class: 'form-control', autofocus: true %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
