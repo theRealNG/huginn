@@ -15,6 +15,8 @@ class Investment < ActiveRecord::Base
 
   validates :app, inclusion: { in: APPS }
   validates :financial_year, presence: true
+  validates :amount, presence: true
+  validates :purchased_on, presence: true
 
   def current_value
     case investment_type
@@ -56,6 +58,7 @@ class Investment < ActiveRecord::Base
 
   private
   def set_financial_year
+    return unless purchased_on.present?
     year = purchased_on.year
     month = purchased_on.month
 

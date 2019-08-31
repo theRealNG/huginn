@@ -31,7 +31,7 @@ Huginn::Application.routes.draw do
     end
   end
 
-  resources :investments, :only => [:index, :new]
+  resources :investments
   get "/dashboard" => "dashboard#index"
 
 

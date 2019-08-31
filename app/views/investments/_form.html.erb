@@ -29,6 +29,56 @@
             </div>
           <% end %>
         </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <%= f.label :amount %>
+            <%= f.number_field :amount, :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <%= f.label :tax_saving, :class => 'propagate-immediately' do %>Tax Saving
+              <%= f.check_box :tax_saving %>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <%= f.label :purchased_on %>
+            <%= f.date_field :purchased_on, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <%= f.label :account %>
+            <%= f.text_field :account, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group type-select">
+            <%= f.label :app %>
+            <%= f.select :app, options_for_select(Investment::APPS, @investment.app), {}, class: 'form-control', autofocus: true %>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <%= f.label :units %>
+            <%= f.number_field :units, :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <%= submit_tag "Save", :class => "btn btn-primary" %>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
