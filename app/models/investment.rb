@@ -21,7 +21,7 @@ class Investment < ActiveRecord::Base
   def current_value
     case investment_type
     when 'Mutual Funds'
-      units * current_nav
+      current_nav.present? ? units * current_nav : 0
     when 'Gold'
       amount
     when 'PPF'
