@@ -108,6 +108,13 @@ class Event < ActiveRecord::Base
       ).update_all(
         current_nav: payload[:nav].split(' ').last
       )
+    elsif agent.name == 'Gold'
+      puts payload
+      Investment.where(
+        investment_type: 'Gold'
+      ).update_all(
+        current_nav: payload[:nav].first[1..-2].sub(',','').to_i/10_000.0
+      )
     end
   end
 end
