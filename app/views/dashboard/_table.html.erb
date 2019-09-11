@@ -13,7 +13,11 @@
         <% data.values.each do |value| %>
           <td>
             <% value.each do |type, amount| %>
-              <%= "#{type.to_s.titleize} : #{amount.round(2)}" %>
+              <% if type.to_s == 'percentage_change' %>
+                <%= "#{type.to_s.titleize} : #{amount.round(2)}%" %>
+              <% else %>
+                <%= "#{type.to_s.titleize} : #{number_to_currency(amount, precision: 2, unit: 'Rs', format: '%n %u')}" %>
+              <% end %>
               </br>
             <% end %>
           </td>

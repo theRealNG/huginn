@@ -19,16 +19,20 @@
           <%= nav_link icon_tag('glyphicon-random') + " View Diagram", diagram_path %>
         </ul>
       <% end %>
-      <%= nav_link "Scenarios", scenarios_path %>
-      <%= nav_link "Events", events_path %>
-      <%= nav_link "Credentials", user_credentials_path %>
-      <%= nav_link "Services", services_path %>
       <%= nav_link "Investments", investments_path do %>
         <ul class='dropdown-menu' role='menu'>
           <%= nav_link icon_tag('glyphicon-plus') + " New Investment", new_investment_path %>
         </ul>
       <% end %>
-      <%= nav_link "Dasbhoard Investments", dashboard_path %>
+      <%= nav_link "Dasbhoard", dashboard_path %>
+      <%= nav_link "Other", '#' do %>
+        <ul class='dropdown-menu' role='menu'>
+          <%= nav_link "Scenarios", scenarios_path %>
+          <%= nav_link "Events", events_path %>
+          <%= nav_link "Credentials", user_credentials_path %>
+          <%= nav_link "Services", services_path %>
+        </ul>
+      <% end %>
     </ul>
   <% end %>
 

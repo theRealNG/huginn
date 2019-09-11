@@ -26,7 +26,7 @@
           </tr>
         <% @investments.each do |investment| %>
           <tr id="<%= investment.id %>">
-            <td><%= investment.amount %></td>
+            <td><%= number_to_currency(investment.amount, unit: "Rs", format: "%n %u") %></td>
             <td><%= investment.current_value.round(2) %></td>
             <td><%= investment.percentage_change.round(2) %></td>
             <td><%= investment.account %></td>
