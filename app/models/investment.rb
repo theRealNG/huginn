@@ -35,6 +35,10 @@ class Investment < ActiveRecord::Base
     results = {}
     financial_years = Investment.select(:financial_year).pluck(:financial_year)
     keys = [:tax_saving_mutual_funds, :non_tax_saving_mutual_funds, :gold_investments, :ppf_investments]
+
+    total_value = {}
+    keys.each { |key| total_value[key] = {invested_amount: 0, current_value: 0} }
+
     financial_years.each do |year|
 
       results[year] = {}
@@ -49,8 +53,18 @@ class Investment < ActiveRecord::Base
           current_value: current_value,
           percentage_change: percentage_change
         }
+
+        total_value[key][:invested_amount] += invested_amount
+        total_value[key][:current_value] += current_value
+        total_value[key][:percentage_change] = (
+          (
+            total_value[key][:current_value] - total_value[key][:invested_amount]
+          )/total_value[key][:invested_amount]
+        ) * 100
       end
     end
+
+    results['total'] = total_value
     results
   end
 
