@@ -12,22 +12,22 @@
       <div class='table-responsive'>
         <table class='table table-striped events'>
           <tr>
-            <th>Amount</th>
+            <th><%= sortable_column 'amount', name: 'Amount' %></th>
             <th>Current Value</th>
             <th>Percentage Change</th>
-            <th>Account</th>
-            <th>Financial Year</th>
-            <th>Type</th>
+            <th><%= sortable_column 'account', name: 'Account' %></th>
+            <th><%= sortable_column 'financial_year', name: 'Financial Year' %></th>
+            <th><%= sortable_column 'investment_type', name: 'Type' %></th>
             <th>Tax Saving</th>
-            <th>Date</th>
-            <th>Units</th>
-            <th>Current NAV</th>
-            <th>App</th>
+            <th><%= sortable_column 'purchased_on', name: 'Date' %></th>
+            <th><%= sortable_column 'units', name: 'Units' %></th>
+            <th><%= sortable_column 'current_nav', name: 'Current Nav' %></th>
+            <th><%= sortable_column 'app', name: 'App' %></th>
           </tr>
         <% @investments.each do |investment| %>
           <tr id="<%= investment.id %>">
             <td><%= number_to_currency(investment.amount, unit: "Rs", format: "%n %u") %></td>
-            <td><%= investment.current_value.round(2) %></td>
+            <td><%= number_to_currency(investment.current_value, precision: 2, unit: "Rs", format: "%n %u") %></td>
             <td><%= investment.percentage_change.round(2) %></td>
             <td><%= investment.account %></td>
             <td><%= investment.financial_year %></td>

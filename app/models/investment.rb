@@ -2,7 +2,7 @@ class Investment < ActiveRecord::Base
   include LiquidDroppable
   acts_as_mappable
 
-  default_scope { order(purchased_on: :desc) }
+  #default_scope { order(purchased_on: :desc) }
   scope :tax_saving_mutual_funds, -> { where(tax_saving: true, investment_type: 'Mutual Funds') }
   scope :non_tax_saving_mutual_funds, -> { where(tax_saving: false, investment_type: 'Mutual Funds') }
   scope :gold_investments, -> { where(investment_type: 'Gold') }

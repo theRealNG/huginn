@@ -1,6 +1,12 @@
 class InvestmentsController < ApplicationController
+  include DotHelper
+  include ActionView::Helpers::TextHelper
+  include SortableTable
+
   def index
-    @investments = Investment.all
+    set_table_sort sorts: %w[amount account financial_year investment_type purchased_on units app current_nav], default: { purchased_on: :desc }
+
+    @investments = Investment.all.reorder(table_sort)
   end
 
   def show
