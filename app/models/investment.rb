@@ -33,7 +33,7 @@ class Investment < ActiveRecord::Base
 
   def self.summary
     results = {}
-    financial_years = Investment.select(:financial_year).pluck(:financial_year)
+    financial_years = Investment.order(:purchased_on).select(:financial_year).pluck(:financial_year)
     keys = [:tax_saving_mutual_funds, :non_tax_saving_mutual_funds, :gold_investments, :ppf_investments]
 
     financial_years.each do |year|
